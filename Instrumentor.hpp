@@ -30,8 +30,8 @@ namespace Profiling {
 
 		struct SessionRAII {
 
-			SessionRAII(const std::string& name) {
-				Instrumentor::Get().BeginSession(name);
+			SessionRAII(const std::string& name, const std::filesystem::path& path) {
+				Instrumentor::Get().BeginSession(name,path);
 			}
 
 			~SessionRAII() {
@@ -163,7 +163,7 @@ namespace Profiling {
 			assert(CurrentSession == "");
 		}
 
-		void BeginSession(const std::string& name, const std::string& filepath) {
+		void BeginSession(const std::string& name, const std::filesystem::path& filepath) {
 			assert(CurrentSession == "");
 			std::cout << "BeginSession " << name << std::endl;
 			ProfileCount = 0;
@@ -247,12 +247,12 @@ constexpr const std::source_location location = std::source_location::current();
 return location.function_name();\
 }())
 
-#define PROFILE_SESSION_START(name) Profiling::Instrumentor::Get().BeginSession(name)
+#define PROFILE_SESSION_START(name,filepath) Profiling::Instrumentor::Get().BeginSession(name,filepath)
 #define PROFILE_SESSION_END Profiling::Instrumentor::Get().EndSession()
 #define PROFILE_SESSION_RAII(name) Profiling::Instrumentor::SessionRAII Instumentor_Makro_Combine(sessionRAII,__LINE__)(name)
 #else
 
-#define PROFILE_SCOPE(name)
+#define PROFILE_SCOPE(name,filepath)
 #define PROFILE_SCOPE_ID_START(name,id)
 #define PROFILE_SCOPE_ID_END(id)
 #define PROFILE_FUNKTION
