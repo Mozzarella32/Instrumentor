@@ -129,7 +129,8 @@ namespace Profiling {
 					long long end = std::chrono::time_point_cast<std::chrono::microseconds>(EndSessionendTimepoint).time_since_epoch().count();
 
 					auto id = std::this_thread::get_id();
-					std::size_t threadID = *reinterpret_cast<unsigned int*>(&id);
+
+					std::size_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
 					WriteProfile({ "EndSession " + CurrentSession, start, end, threadID });
 					WriteFooter();
 					OStream.close();
@@ -234,7 +235,8 @@ namespace Profiling {
 			long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
 
 			auto id = std::this_thread::get_id();
-			std::size_t threadID = *reinterpret_cast<unsigned int*>(&id);
+
+			std::size_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
 			ProfileResult pr{ Name, start, end, threadID };
 			Instrumentor::Get().AddProfileResult(pr);
 
