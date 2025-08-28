@@ -186,6 +186,10 @@ namespace Profiling {
 		}
 
 		void AddProfileResult(ProfileResult pr) {
+			if(CurrentSession == "") {
+					std::cerr << "Error profiling without session running";
+					exit(1);
+			}
 			{
 				std::unique_lock QL(QueueMutex);
 				Queue.push(pr);
