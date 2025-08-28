@@ -15,7 +15,6 @@
 #include <functional>
 
 #include <source_location>
-#include <stacktrace>
 
 namespace Profiling {
 
@@ -188,8 +187,7 @@ namespace Profiling {
 		void AddProfileResult(ProfileResult pr) {
 			if(CurrentSession == "") {
 					std::cerr << "Error profiling without session running:"
-					<< "Error on finish of " << pr.Name
-					<< std::stacktrace::current() << "\n";
+					<< "Error on finish of " << pr.Name << "\n";
 					exit(1);
 			}
 			{
