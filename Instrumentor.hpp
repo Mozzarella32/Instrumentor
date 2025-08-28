@@ -186,7 +186,7 @@ namespace Profiling {
 
 		void AddProfileResult(ProfileResult pr) {
 			if(CurrentSession == "") {
-					std::cerr << "Error profiling without session running:"
+					std::cerr << "Error profiling without session running:\n"
 					<< "Error on finish of " << pr.Name << "\n";
 					exit(1);
 			}
